@@ -21,16 +21,16 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define MD5_HASH_SIZE 16
+#define CRC_HASH_SIZE 16
 
 #define AUS1_I2C_ADDRESS 0x0A
 
 // Utility macros for allocating packets
 #define AUS1_PING_PACKET_SIZE            1
 #define AUS1_PING_RESPONSE_PACKET_SIZE   7
-#define AUS1_START_OF_STREAM_PACKET_SIZE 19
+#define AUS1_START_OF_STREAM_PACKET_SIZE 7
 
-#define AUS1_DATA_REQUEST_SIZE 19
+#define AUS1_DATA_REQUEST_SIZE 7
 
 #define AUS1_DATA_PACKET_SIZE 32
 
@@ -41,7 +41,7 @@ typedef struct {
 
 typedef struct {
     uint16_t data_size;
-    uint8_t md5_hash[MD5_HASH_SIZE];
+    uint8_t crc_hash[CRC_HASH_SIZE];
 } aus1_start_of_stream_packet;
 
 /**

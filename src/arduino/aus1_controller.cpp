@@ -18,7 +18,8 @@
 
 #include "aus1_controller.h"
 
-#include "aus1.h"
+#include "../aus1.h"
+#include "crc32.h"
 
 #include <cstdint>
 
@@ -77,7 +78,6 @@ namespace superi2c {
                     aus1_ping_response_packet packet = aus1_decode_ping_response(data);
 
                     if (packet.peripheral_type == 0) { // invalid packet
-                        state = aus1_controller_state::IDLE;
                         is_connected = false;
                         receiver = nullptr;
                         reset(0);
@@ -87,6 +87,8 @@ namespace superi2c {
                         is_connected = true;
                         last_ping_ms = current_time;
                     }
+
+                    state = aus1_controller_state::IDLE;
                 }
 
             break;
@@ -104,6 +106,7 @@ namespace superi2c {
                     }
 
                     received_data_size = packet.data_size;
+                    data_crc_hash = packet.crc_hash;
 
                     reset(packet.data_size + (packet.data_size % AUS1_DATA_PACKET_SIZE)); // set buffer to new size
                     state = aus1_controller_state::RECEIVING_DATA;
@@ -113,7 +116,12 @@ namespace superi2c {
             
             case aus1_controller_state::RECEIVING_DATA:
                 if (data_buffer_size == data_loc) {
-                    receiver(data, received_data_size + (received_data_size % AUS1_DATA_PACKET_SIZE), data_buffer_size);
+                    // Check CRC checksum
+                    if (crc32buf(data, data_buffer_size) == data_crc_hash) {
+                        receiver(data, received_data_size + (received_data_size % AUS1_DATA_PACKET_SIZE), data_buffer_size);
+                    } else {
+                        receiver(nullptr, 0, 0);
+                    }
 
                     // Remove data buffer without deleting it (which is what reset() does)
                     data = nullptr;
@@ -121,6 +129,8 @@ namespace superi2c {
                     data_buffer_size = 0;
 
                     receiver = nullptr;
+
+                    state = aus1_controller_state::IDLE;
 
                     break;
                 }
@@ -142,7 +152,6 @@ namespace superi2c {
 
                     if (send_transmission(packet, AUS1_PING_PACKET_SIZE) == WIRE_TIMEOUT_ERR_CODE) {
                         is_connected = false;
-                        state = aus1_controller_state::IDLE;
                         break;
                     }
 
