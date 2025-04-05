@@ -107,9 +107,9 @@ namespace superi2c {
          */
         receiver_function receiver;
         /**
-         * @brief 
+         * @brief The checksum CRC32 hash for the data packets
          */
-        uint32_t data_md5_hash;
+        uint32_t data_crc_hash;
         /**
          * @brief Size of the data being receieved
          */

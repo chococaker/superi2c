@@ -34,13 +34,13 @@ This interaction begins with the controller sending an I2C request of 19 bytes.
 
 The peripheral responds with a start-of-stream packet indicating the size of the payload it is about to send.
 
-**`START-OF-STREAM` Packet** (19 bytes):
+**`START-OF-STREAM` Packet** (7 bytes):
 
-| Field           | Length     | Description                      |
-|-----------------|------------|----------------------------------|
-| Packet Type     | 1 byte     | `0xA2` for AUS1 Data Reponse     |
-| Data size       | 2 bytes    | Size of data buffer (in bytes)   |
-| MD5 Checksum    | 16 bytes   | Checksum for data                |
+| Field            | Length    | Description                      |
+|------------------|-----------|----------------------------------|
+| Packet Type      | 1 byte    | `0xA2` for AUS1 Data Reponse     |
+| Data size        | 2 bytes   | Size of data buffer (in bytes)   |
+| CRC32 Checksum   | 4 bytes   | Checksum for data                |
 
 Once this packet is receieved by the controller, it will continuously send 32-byte I2C requests which should be responded by chunks of data starting from the top of the buffer.
 
