@@ -21,7 +21,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define CRC_HASH_SIZE 16
+#define CRC_HASH_SIZE 4
 
 #define AUS1_I2C_ADDRESS 0x0A
 
