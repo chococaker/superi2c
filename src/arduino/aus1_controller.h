@@ -19,7 +19,10 @@
 #pragma once
 
 #include "Wire.h"
-#include "aus1.h"
+
+extern "C" {
+    #include "../aus1.h"
+}
 
 namespace superi2c {
     /**
