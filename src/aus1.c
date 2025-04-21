@@ -56,14 +56,14 @@ aus1_ping_response_packet aus1_decode_ping_response(uint8_t *buf) {
 void aus1_encode_start_of_stream(uint8_t *buf, const aus1_start_of_stream_packet *packet) {
     buf[0] = AUS1_TYPE_PING_RESPONSE_FIELD;
     write_uint16_raw(buf + sizeof(uint16_t) /* packet type */, packet->data_size);
-    memcpy(buf + sizeof(uint8_t) /* packet type */ + sizeof(uint16_t) /* data size */, packet->crc_hash, crc_hash_SIZE);
+    memcpy(buf + sizeof(uint8_t) /* packet type */ + sizeof(uint16_t) /* data size */, packet->crc_hash, CRC_HASH_SIZE);
 }
 aus1_start_of_stream_packet aus1_decode_start_of_stream(uint8_t *buf) {
     aus1_start_of_stream_packet packet = {0};
     if (buf[0] != AUS1_TYPE_START_OF_STREAM_FIELD) return packet;
 
     packet.data_size = read_uint16_raw(buf + sizeof(uint8_t) /* packet type */);
-    memcpy(packet.crc_hash, buf + sizeof(uint8_t) /* packet type */ + sizeof(uint16_t) /* data size */, crc_hash_SIZE);
+    memcpy(packet.crc_hash, buf + sizeof(uint8_t) /* packet type */ + sizeof(uint16_t) /* data size */, CRC_HASH_SIZE);
 
     return packet;
 }
