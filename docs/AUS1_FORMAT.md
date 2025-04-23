@@ -20,11 +20,11 @@ If the controller does not receive a `PING-RESPONSE` packet, it should assume th
 
 **`PING-RESPONSE` packet** (7 bytes):
 
-| Field                | Length    | Description                                       |
-|----------------------|-----------|---------------------------------------------------|
-| Packet Type          | 1 byte    | `0xA1` for AUS1 `PING-RESPONSE`                   |
-| Peripheral Type      | 4 bytes   | An ID for the type of device the peripheral is    |
-| Peripheral Version   | 2 bytes   | An ID for the current version of the peripheral   |
+| Field                | Length    | Description                                              |
+|----------------------|-----------|----------------------------------------------------------|
+| Packet Type          | 1 byte    | `0xA1` for AUS1 `PING-RESPONSE`                          |
+| Peripheral Type      | 4 bytes   | A numeric ID for the type of device the peripheral       |
+| Peripheral Version   | 2 bytes   | A numeric ID for the current version of the peripheral   |
 
 ### Retreiving Data from Peripheral
 

@@ -40,15 +40,15 @@ bool aus1_decode_ping(uint8_t *buf) {
 
 void aus1_encode_ping_response(uint8_t *buf, const aus1_ping_response_packet *packet) {
     buf[0] = AUS1_TYPE_PING_RESPONSE_FIELD;
-    write_uint32_raw(buf + sizeof(uint8_t) /* packet type */, packet->peripheral_type);
-    write_uint16_raw(buf + sizeof(uint8_t) /* packet type */ + sizeof(uint32_t) /* peripheral type */, packet->peripheral_version);
+    write_uint32(buf + sizeof(uint8_t) /* packet type */, packet->peripheral_type);
+    write_uint16(buf + sizeof(uint8_t) /* packet type */ + sizeof(uint32_t) /* peripheral type */, packet->peripheral_version);
 }
 aus1_ping_response_packet aus1_decode_ping_response(uint8_t *buf) {
     aus1_ping_response_packet packet = {0};
     if (buf[0] != AUS1_TYPE_PING_RESPONSE_FIELD) return packet;
 
-    packet.peripheral_type = read_uint32_raw(buf + sizeof(uint8_t) /* packet type */);
-    packet.peripheral_version = read_uint16_raw(buf + sizeof(uint8_t) /* packet type */ + sizeof(uint32_t) /* peripheral type */);
+    packet.peripheral_type = read_uint32(buf + sizeof(uint8_t) /* packet type */);
+    packet.peripheral_version = read_uint16(buf + sizeof(uint8_t) /* packet type */ + sizeof(uint32_t) /* peripheral type */);
 
     return packet;
 }
