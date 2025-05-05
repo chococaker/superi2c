@@ -41,7 +41,7 @@ typedef struct {
 
 typedef struct {
     uint16_t data_size;
-    uint8_t crc_hash[CRC_HASH_SIZE];
+    uint32_t crc_hash;
 } aus1_start_of_stream_packet;
 
 /**
