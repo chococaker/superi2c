@@ -19,7 +19,7 @@
 #include "aus1_controller.h"
 
 #include "../aus1.h"
-#include "crc32.h"
+#include "../util/crc32.h"
 
 #include <cstdint>
 
