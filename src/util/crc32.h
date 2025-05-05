@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #define UPDC32(octet,crc) (crc_32_tab[((crc) ^ ((uint8_t)octet)) & 0xff] ^ ((crc) >> 8))
+#define CRC_HASH_SIZE sizeof(uint32_t)
 
 /**
  * @brief Provides the CRC32 hash of a buffer
