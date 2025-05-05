@@ -30,7 +30,7 @@ If the controller does not receive a `PING-RESPONSE` packet, it should assume th
 
 If the peripheral is known to exist, controller may now ask for data from a peripheral. The data can be of any size up to 65535, as it is split into 32-byte chunks by the peripheral.
 
-This interaction begins with the controller sending an I2C request of 19 bytes.
+This interaction begins with the controller sending an I2C request of 7 bytes.
 
 The peripheral responds with a start-of-stream packet indicating the size of the payload it is about to send.
 
