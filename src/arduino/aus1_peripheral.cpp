@@ -41,9 +41,11 @@ namespace superi2c {
             uint32_t hash = crc32buf(data_being_sent->data, data_being_sent->size);
 
             aus1_start_of_stream_packet packet = { data_being_sent->size, hash };
-            uint8_t *buf = new uint8_t[AUS1_START_OF_STREAM_PACKET_SIZE];
+            uint8_t buf[] = new uint8_t[AUS1_START_OF_STREAM_PACKET_SIZE];
             aus1_encode_start_of_stream(buf, &packet);
             this->send_transmission(buf, AUS1_START_OF_STREAM_PACKET_SIZE);
+
+            delete[] buf;
         });
     }
 

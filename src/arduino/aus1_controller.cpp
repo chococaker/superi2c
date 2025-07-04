@@ -60,7 +60,6 @@ namespace superi2c {
 
         // Failsafe: if state is IDLE and wire is receieving data, something has gone wrong.
         // Await for the stream of data to end (hopefully it does) by waiting 10ms
-
         if (state == aus1_controller_state::IDLE && current_time - last_bytes_received_ms <= 10) return;
 
         // If the controller is not IDLE, then it must be receiving data.
@@ -123,7 +122,8 @@ namespace superi2c {
                         receiver(nullptr, 0, 0);
                     }
 
-                    // Remove data buffer without deleting it (which is what reset() does)
+                    // Remove data buffer
+                    delete[] data;
                     data = nullptr;
                     data_loc = 0;
                     data_buffer_size = 0;
