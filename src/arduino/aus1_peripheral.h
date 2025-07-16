@@ -77,5 +77,5 @@ namespace superi2c {
          * @return The status of the transmission
          */
         int send_transmission(uint8_t *buf, size_t len);
-    }
+    };
 }
